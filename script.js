@@ -86,14 +86,17 @@ const spriteBackdrop= document.getElementById("spriteBackdrop");
 const flavorText    = document.getElementById("flavorText");
 const statsGrid     = document.getElementById("statsGrid");
 const versionsGrid  = document.getElementById("versionsGrid");
+const cryBtn        = document.getElementById("cryBtn");
 
 /* ---- State ---- */
 let isLoading = false;
+let currentCryAudio = null;
 
 /* ---- Entry point ---- */
 function init() {
   nextBtn.addEventListener("click", loadRandomPokemon);
   retryBtn.addEventListener("click", loadRandomPokemon);
+  cryBtn.addEventListener("click", playCry);
   loadRandomPokemon();
 }
 
@@ -161,6 +164,16 @@ function renderPokemon(pokemon, species) {
   pokemonSprite.src = spriteUrl;
   pokemonSprite.alt = nameJa;
 
+  // Cry
+  stopCry();
+  const cryUrl = pokemon.cries?.latest ?? pokemon.cries?.legacy ?? null;
+  if (cryUrl) {
+    cryBtn.dataset.src = cryUrl;
+    cryBtn.hidden = false;
+  } else {
+    cryBtn.hidden = true;
+  }
+
   // Flavor text (Japanese preferred: ja-Hrkt → ja → fallback)
   const jaHrkt = species.flavor_text_entries.filter(e => e.language.name === "ja-Hrkt");
   const jaKanji = species.flavor_text_entries.filter(e => e.language.name === "ja");
@@ -214,6 +227,29 @@ function renderPokemon(pokemon, species) {
       `);
     });
   }
+}
+
+/* ---- Cry playback ---- */
+function playCry() {
+  if (currentCryAudio && !currentCryAudio.paused) {
+    stopCry();
+    return;
+  }
+  const src = cryBtn.dataset.src;
+  if (!src) return;
+
+  currentCryAudio = new Audio(src);
+  cryBtn.classList.add("playing");
+  currentCryAudio.play().catch(() => {});
+  currentCryAudio.addEventListener("ended", () => cryBtn.classList.remove("playing"));
+}
+
+function stopCry() {
+  if (currentCryAudio) {
+    currentCryAudio.pause();
+    currentCryAudio = null;
+  }
+  cryBtn.classList.remove("playing");
 }
 
 /** Collect unique versions from flavor_text_entries (preserves release order) */
