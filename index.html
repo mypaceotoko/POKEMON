@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ポケモン図鑑 - ランダム表示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Floating Pokéballs background -->
+  <div class="bg-pokeballs" aria-hidden="true">
+    <div class="bg-pokeball"></div>
+    <div class="bg-pokeball"></div>
+    <div class="bg-pokeball"></div>
+    <div class="bg-pokeball"></div>
+    <div class="bg-pokeball"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="pokeball-icon" aria-hidden="true">
+        <div class="pb-top"></div>
+        <div class="pb-band">
+          <div class="pb-center"></div>
+        </div>
+        <div class="pb-bottom"></div>
+      </div>
+      <h1 class="site-title">ポケモン<br/>ずかん</h1>
+      <div class="pokeball-icon" aria-hidden="true">
+        <div class="pb-top"></div>
+        <div class="pb-band">
+          <div class="pb-center"></div>
+        </div>
+        <div class="pb-bottom"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Loading Screen -->
+    <div id="loading" class="loading-screen" role="status" aria-live="polite">
+      <div class="loading-pokeball" aria-hidden="true">
+        <div class="pb-top"></div>
+        <div class="pb-band">
+          <div class="pb-center"></div>
+        </div>
+        <div class="pb-bottom"></div>
+      </div>
+      <p class="loading-text">ポケモンを<br/>さがしています…</p>
+    </div>
+
+    <!-- Error Screen -->
+    <div id="error" class="error-screen" hidden>
+      <div class="error-icon" aria-hidden="true">⚠️</div>
+      <p class="error-text">ポケモンが<br/>みつかりませんでした！</p>
+      <button class="btn-retry" id="retryBtn">もういちど</button>
+    </div>
+
+    <!-- Pokémon Card -->
+    <article id="pokemon-card" class="pokemon-card" hidden aria-label="ポケモン情報">
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="card-header-left">
+          <span class="pokemon-number" id="pokemonNumber">#001</span>
+          <h2 class="pokemon-name" id="pokemonName">フシギダネ</h2>
+          <div class="pokemon-genus" id="pokemonGenus">たねポケモン</div>
+        </div>
+        <div class="pokemon-types" id="pokemonTypes"></div>
+      </div>
+
+      <!-- Sprite Area -->
+      <div class="sprite-area">
+        <div class="sprite-backdrop" id="spriteBackdrop">
+          <div class="sprite-stars" aria-hidden="true">
+            <span>★</span><span>★</span><span>★</span>
+            <span>★</span><span>★</span><span>★</span>
+          </div>
+          <img class="pokemon-sprite" id="pokemonSprite" src="" alt="" />
+        </div>
+      </div>
+
+      <!-- Flavor Text -->
+      <div class="flavor-section">
+        <p class="flavor-text" id="flavorText"></p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-section">
+        <h3 class="section-title">ステータス</h3>
+        <div class="stats-grid" id="statsGrid"></div>
+      </div>
+
+      <!-- Game Versions -->
+      <div class="versions-section">
+        <h3 class="section-title">登場したゲーム</h3>
+        <div class="versions-grid" id="versionsGrid"></div>
+      </div>
+    </article>
+
+    <!-- Next Button -->
+    <div class="button-area">
+      <button class="btn-next" id="nextBtn" aria-label="つぎのポケモンをみる">
+        <span class="btn-pokeball" aria-hidden="true">⊙</span>
+        つぎのポケモン！
+      </button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>データ提供: <a href="https://pokeapi.co" target="_blank" rel="noopener noreferrer">PokéAPI</a></p>
+    <p class="footer-copy">Pokémon &copy; Nintendo / Game Freak / Creatures</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
