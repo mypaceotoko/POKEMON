@@ -161,9 +161,10 @@ function renderPokemon(pokemon, species) {
   pokemonSprite.src = spriteUrl;
   pokemonSprite.alt = nameJa;
 
-  // Flavor text (Japanese preferred, latest version)
-  const flavorEntries = species.flavor_text_entries.filter(e => e.language.name === "ja" || e.language.name === "ja-Hrkt");
-  const flavorEntry = flavorEntries[flavorEntries.length - 1] ?? species.flavor_text_entries[species.flavor_text_entries.length - 1];
+  // Flavor text (Japanese preferred: ja-Hrkt → ja → fallback)
+  const jaHrkt = species.flavor_text_entries.filter(e => e.language.name === "ja-Hrkt");
+  const jaKanji = species.flavor_text_entries.filter(e => e.language.name === "ja");
+  const flavorEntry = (jaHrkt[jaHrkt.length - 1]) ?? (jaKanji[jaKanji.length - 1]);
   flavorText.textContent = flavorEntry
     ? flavorEntry.flavor_text.replace(/\f|\n/g, " ")
     : "???";
